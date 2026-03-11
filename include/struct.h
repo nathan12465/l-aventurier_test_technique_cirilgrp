@@ -14,6 +14,8 @@ typedef enum error_s {
     WPATH, // wrong path
     INVCONFCORD, // invalid coordinate in configuration file
     INVCONFMOVE, // invalid movement in configuration file
+    INVMAP, // invalid map configuration
+    INVMAPC, // invalid char in map configuration
     NERR // no error;
 }error_t;
 

@@ -68,12 +68,47 @@ int movement_parsing(char *filename, move_t *movement, error_t *error)
     return (EXIT_SUCCESS);
 }
 
+int check_map_conformity(map_t *map, char *map_file, error_t *error)
+{
+    unsigned int buff = 0;
+
+    for (int i = 0; map_file[i] && map_file[i] != '\n'; i++)
+        map->max_x++;
+    buff = map->max_x;
+    map->max_x = 0;
+    for (int i = 0; map_file[i]; i++){
+        if (map_file[i] == '\n'){
+            map->max_y++;
+            if (map->max_x != buff){
+                *error = INVMAP;
+                return (EXIT_FAILURE);
+            }
+            map->max_x = 0;
+            i++;
+        }
+        if (map_file[i] != '\0' && map_file[i] != '\n' && map_file[i] != '\r' && map_file[i] != '#' && map_file[i] != ' '){
+            *error = INVMAPC;
+            return (EXIT_FAILURE);
+        }
+        map->max_x++;
+    }
+    return (EXIT_SUCCESS);
+}
+
 int map_parsing(char *filename, map_t *map, error_t *error)
 {
     char *file = read_file(filename);
+    char **map2d = NULL;
 
     if (!file)
         return (EXIT_FAILURE);
+    if (check_map_conformity(map, file, error) == EXIT_FAILURE)
+        return (EXIT_FAILURE);
+    map2d = my_str_to_word_array(file, '\n');
+    if (!map2d){
+        free(file);
+        return (EXIT_FAILURE);
+    }
     free(file);
     return (EXIT_SUCCESS);
 }

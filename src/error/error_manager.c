@@ -18,10 +18,16 @@ void error_manager(error_t *error)
             fprintf(stderr, "Les coordonnées de départ sont invalides\n");
             break;
         case INVCONFMOVE:
-            fprintf(stderr, "Les déplacement ne sont pas conforme : rappel : N,S,E,O\n");
+            fprintf(stderr, "Les déplacement ne sont pas conforme : rappel : 'N','S','E','O'\n");
             break;
         case EFILE:
             fprintf(stderr, "Le fichier de configuration est vide :)\n");
+            break;
+        case INVMAP:
+            fprintf(stderr, "Mauvaise configuration de map\n");
+            break;
+        case INVMAPC:
+            fprintf(stderr, "Caractère non autorisé dans la map : rappel : '#',' '\n");
             break;
         case WPATH:
             fprintf(stderr, "Chemin impossible\n");
