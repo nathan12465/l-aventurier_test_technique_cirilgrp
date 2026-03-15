@@ -21,9 +21,9 @@ static int base_coordinate(char *file, move_t *movement)
         if (!(file[i] >= '0' && file[i] <= '9'))
             return (EXIT_FAILURE);
         if (sep == FALSE)
-            movement->start_x = (movement->start_x * 10) + file[i] - '0';
+            movement->current_x = (movement->current_x * 10) + file[i] - '0';
         if (sep == TRUE)
-            movement->start_y = (movement->start_y * 10) + file[i] - '0';
+            movement->current_y = (movement->current_y * 10) + file[i] - '0';
     }
     if (sep == FALSE)
         return (EXIT_FAILURE);
@@ -98,17 +98,11 @@ int check_map_conformity(map_t *map, char *map_file, error_t *error)
 int map_parsing(char *filename, map_t *map, error_t *error)
 {
     char *file = read_file(filename);
-    char **map2d = NULL;
 
     if (!file)
         return (EXIT_FAILURE);
     if (check_map_conformity(map, file, error) == EXIT_FAILURE)
         return (EXIT_FAILURE);
-    map2d = my_str_to_word_array(file, '\n');
-    if (!map2d){
-        free(file);
-        return (EXIT_FAILURE);
-    }
     free(file);
     return (EXIT_SUCCESS);
 }

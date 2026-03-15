@@ -26,9 +26,12 @@ int explorer(char *settings_f, char *map_f);
 
 int parser(config_t *config, char *settings_f, char *map_f);
 
+int path_finder(config_t *config, char *map);
+
 char *read_file(const char *filename);
 char **my_str_to_word_array(char *str, char sep);
+void my_free_word_array(char **word_array);
 
-void error_manager(error_t *error);
+void error_manager(error_t *error, map_t map);
 
 #endif

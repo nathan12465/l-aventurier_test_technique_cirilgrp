@@ -16,6 +16,7 @@ typedef enum error_s {
     INVCONFMOVE, // invalid movement in configuration file
     INVMAP, // invalid map configuration
     INVMAPC, // invalid char in map configuration
+    LIMITLESS, // sans limite (hors limite de la map)
     NERR // no error;
 }error_t;
 
@@ -26,12 +27,8 @@ typedef struct map_s {
 
 typedef struct move_s {
     char *move_line;
-    unsigned int start_y;
-    unsigned int start_x;
     unsigned int current_y;
     unsigned int current_x;
-    unsigned int end_y;
-    unsigned int end_x;
 }move_t;
 
 typedef struct information_s {

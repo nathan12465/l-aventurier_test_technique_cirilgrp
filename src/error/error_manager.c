@@ -8,7 +8,7 @@
 
 #include "explorer.h"
 
-void error_manager(error_t *error)
+void error_manager(error_t *error, map_t map)
 {
     switch (*error)
     {
@@ -31,6 +31,9 @@ void error_manager(error_t *error)
             break;
         case WPATH:
             fprintf(stderr, "Chemin impossible\n");
+            break;
+        case LIMITLESS:
+            fprintf(stderr, "Chemin en dehors des limites : rappel : Xmax = %d, Ymax = %d\n", map.max_x, map.max_y);
             break;
         default:
             break;

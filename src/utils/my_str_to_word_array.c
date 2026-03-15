@@ -7,6 +7,16 @@
 
 #include "explorer.h"
 
+void my_free_word_array(char **word_array)
+{
+    if (!word_array)
+        return;
+    for (int i = 0; word_array[i]; i++) {
+        free(word_array[i]);
+    }
+    free(word_array);
+}
+
 static char **malloc_my_double_pointer(char *str, char sep, int word_nb)
 {
     char **result = NULL;

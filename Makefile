@@ -19,9 +19,13 @@ UTILS_D = $(SRC_D)utils/
 
 ERROR_D = $(SRC_D)error/
 
+PATH_FINDER_D = $(SRC_D)path_finder/
+
 EXPLORER_F = explorer.c
 
 PARSING_F = parser.c
+
+PATH_FINDER_F = path_finder.c
 
 UTILS_F = read_file.c \
           my_str_to_word_array.c
@@ -32,7 +36,8 @@ SRC = $(addprefix $(SRC_D), main.c) \
       $(addprefix $(UTILS_D), $(UTILS_F)) \
       $(addprefix $(EXPLORER_D), $(EXPLORER_F)) \
       $(addprefix $(PARSING_D), $(PARSING_F)) \
-      $(addprefix $(ERROR_D), $(ERROR_F))
+      $(addprefix $(ERROR_D), $(ERROR_F)) \
+      $(addprefix $(PATH_FINDER_D), $(PATH_FINDER_F))
 
 OBJ = $(SRC:$(SRC_D)%.c=$(OBJ_D)%.o)
 
