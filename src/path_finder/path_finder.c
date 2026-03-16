@@ -8,9 +8,26 @@
 
 #include "explorer.h"
 
+void write_move(char **map2d, move_t move, int state)
+{
+    if (state == 0)
+        map2d[move.current_y][move.current_x] = '.';
+    if (state == 1)
+        map2d[move.current_y][move.current_x] = 'X';
+    if (state == 2)
+        map2d[move.current_y][move.current_x] = 'S';
+    if (state == 3)
+        map2d[move.current_y][move.current_x] = 'E';
+}
+
+void print_map(map_t map, char **map2d)
+{
+    for (unsigned int i = 0; i < map.max_y; i++)
+        printf("%s\n", map2d[i]);
+}
+
 int check_exec(char **map2d, config_t *config)
 {
-    printf("CHECK x : %d,  y : %d\n", config->move.current_x, config->move.current_y);
     if (config->move.current_x < 0 || config->move.current_y < 0){
         config->error = LIMITLESS;
         my_free_word_array(map2d);
@@ -28,15 +45,16 @@ int check_exec(char **map2d, config_t *config)
     }
     if (map2d[config->move.current_y][config->move.current_x] == '#'){
         config->error = WPATH;
+        write_move(map2d, config->move, 1);
+        print_map(config->map, map2d);
         my_free_word_array(map2d);
         return (EXIT_FAILURE);
     }
     return (EXIT_SUCCESS);
 }
 
-void move_exec(char c, move_t *move, map_t map)
+void move_exec(char c, move_t *move)
 {
-    printf("prev x : %d, prev y : %d\n", move->current_x, move->current_y);
     switch (c) {
     case 'N':
         move->current_y--;
@@ -55,11 +73,6 @@ void move_exec(char c, move_t *move, map_t map)
     }
 }
 
-void write_move(char **map2d, move_t move)
-{
-    map2d[move.current_y][move.current_x] = '.';
-}
-
 int path_finder(config_t *config, char *map)
 {
     char *file = read_file(map);
@@ -72,13 +85,16 @@ int path_finder(config_t *config, char *map)
     if (!map2d)
         return (EXIT_FAILURE);
     for (int i = 0; config->move.move_line[i]; i++){
-        move_exec(config->move.move_line[i], &config->move, config->map);
+        if (i == 0 && check_exec(map2d, config) == EXIT_SUCCESS)
+            write_move(map2d, config->move, 2);
+        move_exec(config->move.move_line[i], &config->move);
         if (check_exec(map2d, config) == EXIT_FAILURE)
             return (EXIT_FAILURE);
-        write_move(map2d, config->move);
+        write_move(map2d, config->move, 0);
     }
-    for (int i = 0; map2d[i]; i++)
-        printf("%s", map2d[i]);
+    if (check_exec(map2d, config) == EXIT_SUCCESS)
+        write_move(map2d, config->move, 3);
+    print_map(config->map, map2d);
     my_free_word_array(map2d);
     return (EXIT_SUCCESS);
 }

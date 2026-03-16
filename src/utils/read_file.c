@@ -53,7 +53,7 @@ char *read_file(const char *filename)
     int size = get_file_size(filename);
     char *buffer = NULL;
 
-    if (size < 0 || fd == -1) {
+    if (size <= 0 || fd == -1) {
         return NULL;
     }
     buffer = get_file_content(fd, size);

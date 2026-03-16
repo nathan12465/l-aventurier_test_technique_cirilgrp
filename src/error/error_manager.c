@@ -23,6 +23,9 @@ void error_manager(error_t *error, map_t map)
         case EFILE:
             fprintf(stderr, "Le fichier de configuration est vide :)\n");
             break;
+        case EFILE_MAP:
+            fprintf(stderr, "Pas de carte :)\n");
+            break;
         case INVMAP:
             fprintf(stderr, "Mauvaise configuration de map\n");
             break;

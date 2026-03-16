@@ -11,6 +11,7 @@
 
 typedef enum error_s {
     EFILE, // empty file
+    EFILE_MAP, // map file is empty
     WPATH, // wrong path
     INVCONFCORD, // invalid coordinate in configuration file
     INVCONFMOVE, // invalid movement in configuration file
